@@ -1,0 +1,16 @@
+{
+  "name": "ark-stream-backend",
+  "version": "1.0.0",
+  "description": "ARK AC — Streaming Backend (Render)",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "socket.io": "^4.7.5"
+  }
+}
