@@ -1,7 +1,7 @@
 {
   "name": "ark-stream-backend",
-  "version": "1.0.0",
-  "description": "ARK AC — Streaming Backend (Render)",
+  "version": "2.0.0",
+  "description": "ARK AC — Streaming Backend v2 (Binary WS + Token Auth)",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
@@ -12,6 +12,6 @@
   "dependencies": {
     "express": "^4.21.0",
     "socket.io": "^4.7.5",
-    "ws": "^8.17.1"
+    "ws": "^8.17.0"
   }
 }
