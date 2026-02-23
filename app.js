@@ -31,10 +31,26 @@ const io = new Server(server, {
     cors: { origin: '*', methods: ['GET', 'POST'] },
     maxHttpBufferSize: 5 * 1024 * 1024,
     transports: ['polling', 'websocket'],
+    path: '/socket.io/',
 });
 
 // ═══ Raw WebSocket pour les joueurs (frames binaires) ═══
-const wss = new WebSocketServer({ server, path: '/stream' });
+// Mode noServer: on gere manuellement le upgrade HTTP pour eviter
+// tout conflit avec Socket.IO sur le meme port
+const wss = new WebSocketServer({ noServer: true });
+
+// Separation propre des upgrades WebSocket
+server.on('upgrade', (request, socket, head) => {
+    const pathname = new URL(request.url, 'http://localhost').pathname;
+
+    if (pathname === '/stream') {
+        // → Raw WS pour les joueurs (frames binaires)
+        wss.handleUpgrade(request, socket, head, (ws) => {
+            wss.emit('connection', ws, request);
+        });
+    }
+    // Socket.IO gere ses propres upgrades sur /socket.io/ automatiquement
+});
 
 app.use(express.json({ limit: '1mb' }));
 
